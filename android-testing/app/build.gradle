@@ -11,14 +11,27 @@ android {
         targetSdkVersion 27
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.lucascampos.testing.runner.TestingRunnerSample"
     }
 
     buildTypes {
+        debug {
+            buildConfigField "String", "BASE_URL", "\"https://api.github.com/\""
+        }
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            buildConfigField "String", "BASE_URL", "\"https://api.github.com/\""
         }
+    }
+
+    testOptions {
+        execution 'ANDROID_TEST_ORCHESTRATOR'
+    }
+
+    androidExtensions {
+        experimental true
     }
 }
 
@@ -27,14 +40,18 @@ final supportVersion = '27.0.2'
 final constraintVersion = '1.0.2'
 final archComponentsVersion = '1.1.0'
 final glideVersion = '4.5.0'
+final okHttpVersion = '3.9.1'
 
 final junitVersion = '4.12'
 final espressoVersion = '3.0.1'
+final mockitoVersion = '2.13.0'
 final testRunnerVersion = '1.0.1'
+final requestMatcherVersion = '2.2.0'
 
 dependencies {
     implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
 
+    implementation "com.android.support:design:$supportVersion"
     implementation "com.android.support:appcompat-v7:$supportVersion"
     implementation "com.android.support:recyclerview-v7:$supportVersion"
     implementation "com.android.support.constraint:constraint-layout:$constraintVersion"
@@ -43,13 +60,24 @@ dependencies {
 
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
     implementation "com.squareup.retrofit2:converter-gson:$retrofitVersion"
+    implementation "com.squareup.retrofit2:adapter-rxjava2:$retrofitVersion"
+    implementation "com.squareup.okhttp3:okhttp:$okHttpVersion"
+
+    implementation "io.reactivex.rxjava2:rxandroid:2.0.1"
+    implementation "io.reactivex.rxjava2:rxjava:2.1.8"
+    implementation 'com.jakewharton.rxbinding2:rxbinding-appcompat-v7:2.0.0'
 
     implementation "com.github.bumptech.glide:glide:$glideVersion"
 
-
     testImplementation "junit:junit:$junitVersion"
+    testImplementation "org.mockito:mockito-core:$mockitoVersion"
     testImplementation "android.arch.core:core-testing:$archComponentsVersion"
 
     androidTestImplementation "com.android.support.test:runner:$testRunnerVersion"
     androidTestImplementation "com.android.support.test.espresso:espresso-core:$espressoVersion"
+    androidTestImplementation "br.com.concretesolutions:requestmatcher:$requestMatcherVersion"
+    androidTestImplementation "com.squareup.okhttp3:mockwebserver:$okHttpVersion"
+
+    androidTestUtil "com.android.support.test:orchestrator:$testRunnerVersion"
 }
+
