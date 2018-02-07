@@ -19,9 +19,14 @@ import org.mockito.junit.MockitoJUnitRunner
 
 /**
  * @author Lucas Campos
+ *
+ * Validando se um item que estava inscrito recebeu a notificação
+ * do LiveData/MutableLiveData. Essa é uma outra abordagem que pode
+ * ser utilizada para validar o comportamento quando trabalhamos
+ * com esses elementos.
  */
 @RunWith(MockitoJUnitRunner::class)
-class RepositoryViewModelTestSample {
+class RepositoryViewModelTest2 {
 
     @get:Rule
     val rule: TestRule = InstantTaskExecutorRule()
